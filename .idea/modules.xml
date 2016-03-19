@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/alarmClock.iml" filepath="$PROJECT_DIR$/alarmClock.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/peer-pressure.iml" filepath="$PROJECT_DIR$/peer-pressure.iml" />
     </modules>
   </component>
 </project>
