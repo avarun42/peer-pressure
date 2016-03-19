@@ -28,11 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
         //view the time
         timeView = (TextClock)findViewById(R.id.clock);
+        Intent intent = new Intent(MainActivity.this,AlarmReceiver.class);
+        stopService(intent);
     }
 
-    public void addButtonClick(View V){
+    public void addButtonClick(View V) {
         //open the new activity
-        Intent intent = new Intent(MainActivity.this,AddActivity.class);
+        Intent intent = new Intent(MainActivity.this, AddActivity.class);
         startActivity(intent);
     }
 }

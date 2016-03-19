@@ -13,6 +13,7 @@ import android.util.Log;
 
 public class AlarmService extends IntentService {
     private NotificationManager alarmNotificationManager;
+    Intent myIntent;
 
     public AlarmService() {
         super("AlarmService");
@@ -29,16 +30,17 @@ public class AlarmService extends IntentService {
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, AddActivity.class), 0);
+                new Intent(this, AlarmActivity.class), 0);
 
-        NotificationCompat.Builder alamNotificationBuilder = new NotificationCompat.Builder(
+        NotificationCompat.Builder alarmNotificationBuilder = new NotificationCompat.Builder(
                 this).setContentTitle("Alarm").setSmallIcon(R.mipmap.ic_launcher)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                 .setContentText(msg);
 
 
-        alamNotificationBuilder.setContentIntent(contentIntent);
-        alarmNotificationManager.notify(1, alamNotificationBuilder.build());
+        alarmNotificationBuilder.setContentIntent(contentIntent);
+        alarmNotificationManager.notify(1, alarmNotificationBuilder.build());
         Log.d("AlarmService", "Notification sent.");
     }
+
 }

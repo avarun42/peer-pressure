@@ -51,6 +51,7 @@ public class AddActivity extends AppCompatActivity {
             Intent myIntent = new Intent(AddActivity.this, AlarmReceiver.class);
             pendingIntent = PendingIntent.getBroadcast(AddActivity.this, 0, myIntent, 0);
             alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+            Log.d("AddActivity","alarm");
         } else {
             alarmManager.cancel(pendingIntent);
             setAlarmText("");
