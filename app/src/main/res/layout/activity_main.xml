@@ -20,7 +20,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add"
+        android:text="Add Alarm"
         android:id="@+id/button_add"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -33,5 +33,14 @@
         android:id="@+id/dateClock"
         android:layout_below="@+id/clock"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Contacts"
+        android:id="@+id/button_contact"
+        android:layout_above="@+id/button_add"
+        android:layout_centerHorizontal="true"
+        android:onClick="contactButtonClicked"/>
 
 </RelativeLayout>

@@ -29,6 +29,7 @@
         <receiver android:name=".AlarmReceiver" />
 
         <activity android:name=".AlarmActivity" />
+        <activity android:name=".AddContactActivity"></activity>
     </application>
 
 </manifest>

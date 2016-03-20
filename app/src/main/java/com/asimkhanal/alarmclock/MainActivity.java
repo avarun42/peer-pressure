@@ -38,4 +38,9 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(MainActivity.this, AddActivity.class);
         startActivity(intent);
     }
+
+    public void contactButtonClicked(View V){
+        Intent intent = new Intent(MainActivity.this,AddContactActivity.class);
+        startActivity(intent);
+    }
 }
