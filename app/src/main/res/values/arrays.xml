@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tier_array">
+    <item>Low Key</item>
+    <item>Slightly Awkward</item>
+    <item>You don\'t wanna call this person</item>
+    </string-array>
+</resources>
