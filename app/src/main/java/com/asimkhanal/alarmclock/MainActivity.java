@@ -2,23 +2,17 @@ package com.asimkhanal.alarmclock;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextClock;
-import android.widget.TextView;
 
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
+import java.util.Locale;
+
+import static android.text.format.DateFormat.getBestDateTimePattern;
 
 public class MainActivity extends Activity {
-    TextClock timeView;
+    TextClock timeView, dateView;
     Button addButton;
 
     @Override
@@ -27,9 +21,15 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         setTitle("Text Alarm");
 
+        dateView = (TextClock) findViewById(R.id.dateClock);
+        String skeleton = "MMMddyyyy";
+        CharSequence bestPattern = getBestDateTimePattern(Locale.getDefault(), skeleton);
+        dateView.setFormat12Hour(bestPattern);
+        dateView.setFormat24Hour(bestPattern);
+
         //view the time
         timeView = (TextClock)findViewById(R.id.clock);
-        Intent intent = new Intent(MainActivity.this,AlarmReceiver.class);
+        Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
         stopService(intent);
     }
 
