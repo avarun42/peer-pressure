@@ -17,15 +17,16 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        // In any activity just pass the context and use the singleton method
-        DatabaseHelper db = DatabaseHelper.getInstance(this);
-
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("Text Alarm");
+
+        DatabaseHelper db = DatabaseHelper.getInstance(this);
+        // If db is empty, must be populated
+        if (db.isEmpty()) {
+            Intent initialContactsIntent = new Intent(MainActivity.this, InitialContactsActivity.class);
+            startActivity(initialContactsIntent);
+        }
 
         dateView = (TextClock) findViewById(R.id.dateClock);
         String skeleton = "MMMddyyyy";

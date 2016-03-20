@@ -8,13 +8,12 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 
 import java.util.Calendar;
+import java.util.List;
+import java.util.Random;
 
 public class AlarmActivity extends Activity {
     AlarmManager alarmManager;
@@ -57,15 +56,20 @@ public class AlarmActivity extends Activity {
 //        }
 //    }
 
-    public void snoozeButtonClicked(View V){
+    public void snoozeButtonClicked(View V) {
+        String tier = "LOW";
+
+        DatabaseHelper db = DatabaseHelper.getInstance(this);
+        List<Contact> contacts = db.getContactsByTier(tier);
+        Contact contactToCall = contacts.get(new Random().nextInt(contacts.size()));
+
+
         // May need to run following block in service
 //        EndCallListener callListener = new EndCallListener();
 //        TelephonyManager mTM = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 //        mTM.listen(callListener, PhoneStateListener.LISTEN_CALL_STATE);
 
-
-
-        String contactNumber = "tel:6097907855";
+        String contactNumber = "tel:" + contactToCall.phone_number;
 
         Log.d("MyActivity", "Alarm On");
         Calendar calendar = Calendar.getInstance();

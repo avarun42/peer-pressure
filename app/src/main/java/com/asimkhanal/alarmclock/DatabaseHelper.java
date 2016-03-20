@@ -170,6 +170,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return contacts;
     }
 
+    // Get all contacts of a certain tier from the database
+    public List<Contact> getContactsByTier(String tier) {
+        List<Contact> contacts = new ArrayList<>();
+
+        // SELECT * FROM CONTACTS
+        // WHERE TIER = tier
+        String CONTACTS_SELECT_QUERY = String.format("SELECT * FROM %s WHERE %s = ?",
+                TABLE_CONTACTS, KEY_CONTACT_TIER);
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(CONTACTS_SELECT_QUERY, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    Contact newContact = new Contact();
+                    newContact.name = cursor.getString(cursor.getColumnIndex(KEY_CONTACT_NAME));
+                    newContact.phone_number = cursor.getString(cursor.getColumnIndex(KEY_CONTACT_PH_NO));
+                    newContact.tier = cursor.getString(cursor.getColumnIndex(KEY_CONTACT_TIER));
+
+                    contacts.add(newContact);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to get contacts of tier " + tier + " from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return contacts;
+    }
+
     // Getting single contact
     public Contact getContact(int id) {
         Contact contact = null;
