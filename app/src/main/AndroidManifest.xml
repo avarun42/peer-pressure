@@ -3,6 +3,7 @@
     package="com.asimkhanal.alarmclock">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
