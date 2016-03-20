@@ -1,5 +1,6 @@
 package com.asimkhanal.alarmclock;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     TextClock timeView;
     Button addButton;
 

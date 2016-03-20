@@ -1,5 +1,6 @@
 package com.asimkhanal.alarmclock;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -14,7 +15,7 @@ import android.widget.ToggleButton;
 
 import java.util.Calendar;
 
-public class AddActivity extends AppCompatActivity {
+public class AddActivity extends Activity {
     AlarmManager alarmManager;
     private PendingIntent pendingIntent;
     private TextView alarmTextView;

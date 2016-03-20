@@ -26,4 +26,13 @@
         android:layout_centerHorizontal="true"
         android:onClick="addButtonClick"
         android:enabled="true" />
+
+    <TextClock
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textClock"
+        android:layout_below="@+id/clock"
+        android:layout_centerHorizontal="true"
+        android:format12Hour="MMM dd, yyyy"/>
+
 </RelativeLayout>
