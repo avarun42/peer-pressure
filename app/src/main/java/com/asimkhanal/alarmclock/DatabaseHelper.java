@@ -12,45 +12,58 @@ import java.util.List;
 /**
  * Created by Asim KHANAL on 3/19/2016.
  */
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
-    // All Static variables
-    // Database Version
+    // Database Info
+    private static final String DATABASE_NAME = "contactsManager";
     private static final int DATABASE_VERSION = 1;
 
-    // Database Name
-    private static final String DATABASE_NAME = "contactsManager";
-
-    // Contacts table name
+    // Table Names
     private static final String TABLE_CONTACTS = "contacts";
 
-    // Contacts Table Columns names
-    private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
-    private static final String KEY_PH_NO = "phone_number";
-    private static final String KEY_TIER = "tier";
+    // Contacts Table Columns
+    private static final String KEY_CONTACT_ID = "id";
+    private static final String KEY_CONTACT_NAME = "name";
+    private static final String KEY_CONTACT_PH_NO = "phone_number";
+    private static final String KEY_CONTACT_TIER = "tier";
 
-    public DatabaseHandler(Context context) {
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // Creating Tables
+    // Called when the database connection is being configured.
+    // Configure database settings for things like foreign key support, write-ahead logging, etc.
+    @Override
+    public void onConfigure(SQLiteDatabase db) {
+        super.onConfigure(db);
+        db.setForeignKeyConstraintsEnabled(true);
+    }
+
+    // Called when the database is created for the FIRST time.
+    // If a database already exists on disk with the same DATABASE_NAME, this method will NOT be called.
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_PH_NO + " TEXT," +KEY_TIER+" TEXT"+ ")";
+        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS +
+                "(" +
+                KEY_CONTACT_ID + " INTEGER PRIMARY KEY," +
+                KEY_CONTACT_NAME + " TEXT," +
+                KEY_CONTACT_PH_NO + " TEXT" +
+                KEY_CONTACT_TIER + " TEXT" +
+                ")";
+
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
-    // Upgrading database
+    // Called when the database needs to be upgraded.
+    // This method will only be called if a database already exists on disk with the same DATABASE_NAME,
+    // but the DATABASE_VERSION is different than the version of the database that exists on disk.
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
-
-        // Create tables again
-        onCreate(db);
+        if (oldVersion != newVersion) {
+            // Simplest implementation is to drop all old tables and recreate them
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
+            onCreate(db);
+        }
     }
 
     // Adding new contact
@@ -58,9 +71,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, contact.getName()); // Contact Name
-        values.put(KEY_PH_NO, contact.getPhoneNumber()); // Contact Phone Number
-        values.put(KEY_TIER,contact.getTier());
+        values.put(KEY_CONTACT_NAME, contact.getName()); // Contact Name
+        values.put(KEY_CONTACT_PH_NO, contact.getPhoneNumber()); // Contact Phone Number
+        values.put(KEY_CONTACT_TIER, contact.getTier());
 
         // Inserting Row
         db.insert(TABLE_CONTACTS, null, values);
@@ -71,8 +84,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Contact getContact(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[] { KEY_ID,
-                        KEY_NAME, KEY_PH_NO, KEY_TIER }, KEY_ID + "=?",
+        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{KEY_CONTACT_ID,
+                        KEY_CONTACT_NAME, KEY_CONTACT_PH_NO, KEY_CONTACT_TIER}, KEY_CONTACT_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
@@ -119,24 +132,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return count
         return cursor.getCount();
     }
+
     // Updating single contact
     public int updateContact(Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, contact.getName());
-        values.put(KEY_PH_NO, contact.getPhoneNumber());
-        values.put(KEY_TIER,contact.getTier());
+        values.put(KEY_CONTACT_NAME, contact.getName());
+        values.put(KEY_CONTACT_PH_NO, contact.getPhoneNumber());
+        values.put(KEY_CONTACT_TIER, contact.getTier());
 
         // updating row
-        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
+        return db.update(TABLE_CONTACTS, values, KEY_CONTACT_ID + " = ?",
                 new String[] { String.valueOf(contact.getID()) });
     }
 
     // Deleting single contact
     public void deleteContact(Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
+        db.delete(TABLE_CONTACTS, KEY_CONTACT_ID + " = ?",
                 new String[] { String.valueOf(contact.getID()) });
         db.close();
     }

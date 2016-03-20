@@ -17,6 +17,10 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DatabaseHelper db = new DatabaseHelper(this);
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("Text Alarm");

@@ -2,12 +2,9 @@ package com.asimkhanal.alarmclock;
 
 import android.app.Activity;
 import android.os.Bundle;
-import java.util.List;
-
-import android.app.Activity;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
+
+import java.util.List;
 
 public class AddContactActivity extends Activity {
 
@@ -16,7 +13,7 @@ public class AddContactActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
 
-        DatabaseHandler db = new DatabaseHandler(this);
+        DatabaseHelper db = new DatabaseHelper(this);
 
         /**
          * CRUD Operations
@@ -33,7 +30,7 @@ public class AddContactActivity extends Activity {
         List<Contact> contacts = db.getAllContacts();
 
         for (Contact cn : contacts) {
-            String log = "Id: "+cn.getID()+" ,Name: " + cn.getName() + " ,Phone: " + cn.getPhoneNumber();
+            String log = "Id: " + cn.getID() + " ,Name: " + cn.getName() + " ,Phone: " + cn.getPhoneNumber();
             // Writing Contacts to log
             Log.d("Name: ", log);
         }
