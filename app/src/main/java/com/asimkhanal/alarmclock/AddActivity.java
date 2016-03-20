@@ -51,9 +51,9 @@ public class AddActivity extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
             calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
-            calendar.set(Calendar.YEAR,alarmDatePicker.getYear());
+            /*calendar.set(Calendar.YEAR,alarmDatePicker.getYear());
             calendar.set(Calendar.MONTH,alarmDatePicker.getMonth());
-            calendar.set(Calendar.MONTH,alarmDatePicker.getDayOfMonth());
+            calendar.set(Calendar.MONTH,alarmDatePicker.getDayOfMonth());*/
             Intent myIntent = new Intent(AddActivity.this, AlarmReceiver.class);
             pendingIntent = PendingIntent.getBroadcast(AddActivity.this, 0, myIntent, 0);
             alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);

@@ -2,6 +2,7 @@ package com.asimkhanal.alarmclock;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     public void snoozeButtonClicked(View V){
-        String contactNumber = "1234567890";
+        String contactNumber = "tel:6097907855";
 
         Log.d("MyActivity", "Alarm On");
         Calendar calendar = Calendar.getInstance();
