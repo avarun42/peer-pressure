@@ -48,6 +48,8 @@ public class InitialContactsActivity extends Activity {
             contact.phone_number = phoneNumber;
             contact.tier = tier.toUpperCase();
 
+            db.addOrUpdateContact(contact);
+
             Log.d("contact", contact.toString());
         }
         cursor.close();
