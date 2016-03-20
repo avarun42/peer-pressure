@@ -27,9 +27,6 @@ public class AddContactActivity extends Activity {
         intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
         startActivityForResult(intent, 1);
 
-        Intent mainIntent = new Intent(AddContactActivity.this, MainActivity.class);
-        startActivity(mainIntent);
-
         Spinner spinner = (Spinner) findViewById(R.id.spinner_tier);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,

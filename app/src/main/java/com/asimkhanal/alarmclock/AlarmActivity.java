@@ -19,14 +19,16 @@ import java.util.List;
 import java.util.Random;
 
 public class AlarmActivity extends Activity implements SensorListener {
+    private static final int SHAKE_DURATION =100000 ;
     AlarmManager alarmManager;
     AudioManager audioManager;
     private PendingIntent pendingIntent;
     private static final String LOG_TAG = "callIntent";
     SensorManager sensorMgr;
-    private static final int SHAKE_THRESHOLD = 1600;
+    private static final int SHAKE_THRESHOLD = 3200;
     private long lastUpdate;
     private float x,y,z,last_x,last_y,last_z;
+    private long mLastShake;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +73,9 @@ public class AlarmActivity extends Activity implements SensorListener {
     public void snoozeButtonClicked(View V) {
         String tier = "LOW";
 
-        DatabaseHelper db = DatabaseHelper.getInstance(this);
-        List<Contact> contacts = db.getContactsByTier(tier);
-        Contact contactToCall = contacts.get(new Random().nextInt(contacts.size()));
+        //DatabaseHelper db = DatabaseHelper.getInstance(this);
+        //List<Contact> contacts = db.getContactsByTier(tier);
+        //Contact contactToCall = contacts.get(new Random().nextInt(contacts.size()));
 
 
         // May need to run following block in service
@@ -81,7 +83,7 @@ public class AlarmActivity extends Activity implements SensorListener {
 //        TelephonyManager mTM = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 //        mTM.listen(callListener, PhoneStateListener.LISTEN_CALL_STATE);
 
-        String contactNumber = "tel:" + contactToCall.phone_number;
+        String contactNumber = "tel:6097907855";
 
         Log.d("MyActivity", "Alarm On");
         Calendar calendar = Calendar.getInstance();
@@ -124,10 +126,13 @@ public class AlarmActivity extends Activity implements SensorListener {
 
                 float speed = Math.abs(x+y+z - last_x - last_y - last_z) / diffTime * 10000;
 
-                if (speed > SHAKE_THRESHOLD) {
-                    Log.d("sensor", "shake detected w/ speed: " + speed);
-                    Toast.makeText(this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
-                    android.os.Process.killProcess(android.os.Process.myPid());
+                if (speed > SHAKE_THRESHOLD ) {
+                    if(curTime-mLastShake>SHAKE_DURATION) {
+                        mLastShake=curTime;
+                        Log.d("sensor", "shake detected w/ speed: " + speed);
+                        Toast.makeText(this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                    }
                 }
                 last_x = x;
                 last_y = y;
