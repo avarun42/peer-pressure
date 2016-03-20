@@ -17,7 +17,9 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        DatabaseHelper db = new DatabaseHelper(this);
+
+        // In any activity just pass the context and use the singleton method
+        DatabaseHelper db = DatabaseHelper.getInstance(this);
 
 
 
