@@ -58,7 +58,7 @@ public class AddContactActivity extends Activity {
         Contact c1 = new Contact();
         c1.name = nameText.getText().toString();
         c1.phone_number = "tel:" + phoneNo.getText().toString();
-        c1.tier = tier;
+        c1.tier = tier.toUpperCase();
 
 
         // Get singleton instance of database
