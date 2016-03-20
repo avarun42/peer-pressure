@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -30,7 +31,7 @@
 
         <activity android:name=".AlarmActivity" />
         <activity android:name=".AddContactActivity" />
-        <activity android:name=".InitialContactsActivity"></activity>
+        <activity android:name=".InitialContactsActivity" />
     </application>
 
 </manifest>

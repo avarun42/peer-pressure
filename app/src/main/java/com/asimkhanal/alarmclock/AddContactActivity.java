@@ -1,8 +1,9 @@
 package com.asimkhanal.alarmclock;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,6 +22,11 @@ public class AddContactActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
         setTitle("Add Contact");
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+        startActivityForResult(intent, 1);
+
         Spinner spinner = (Spinner) findViewById(R.id.spinner_tier);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
