@@ -20,22 +20,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Set the Date"
+            android:text="Alarm Date"
             android:id="@+id/text_date"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center_horizontal" />
 
         <DatePicker
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="140dp"
             android:id="@+id/datePicker" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Set the Time"
-            android:id="@+id/text_time" />
+            android:text="Alarm Time"
+            android:id="@+id/text_time"
+            android:layout_gravity="center_horizontal" />
 
         <TimePicker
             android:layout_width="wrap_content"
