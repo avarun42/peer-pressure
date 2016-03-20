@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
@@ -18,6 +19,7 @@ public class AddActivity extends AppCompatActivity {
     private PendingIntent pendingIntent;
     private TextView alarmTextView;
     private TimePicker alarmTimePicker;
+    private DatePicker alarmDatePicker;
     private static AddActivity inst;
     private String alarmText;
 
@@ -37,6 +39,7 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         setTitle("Add an alarm");
         alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
+        alarmDatePicker = (DatePicker)findViewById(R.id.datePicker);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         ToggleButton alarmToggle = (ToggleButton) findViewById(R.id.alarmToggle);
         alarmTextView = (TextView) findViewById(R.id.text_time);
@@ -48,6 +51,9 @@ public class AddActivity extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
             calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
+            calendar.set(Calendar.YEAR,alarmDatePicker.getYear());
+            calendar.set(Calendar.MONTH,alarmDatePicker.getMonth());
+            calendar.set(Calendar.MONTH,alarmDatePicker.getDayOfMonth());
             Intent myIntent = new Intent(AddActivity.this, AlarmReceiver.class);
             pendingIntent = PendingIntent.getBroadcast(AddActivity.this, 0, myIntent, 0);
             alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
