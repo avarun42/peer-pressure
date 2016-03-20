@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Info
     private static final String DATABASE_NAME = "contactsManager";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Table Names
     private static final String TABLE_CONTACTS = "contacts";
@@ -272,7 +272,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(CONTACTS_SELECT_QUERY, null);
 
-        cursor.close();
         return cursor.getCount();
     }
 

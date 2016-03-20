@@ -23,10 +23,10 @@ public class MainActivity extends Activity {
 
         DatabaseHelper db = DatabaseHelper.getInstance(this);
         // If db is empty, must be populated
-        if (db.isEmpty()) {
-            Intent initialContactsIntent = new Intent(MainActivity.this, InitialContactsActivity.class);
-            startActivity(initialContactsIntent);
-        }
+//        if (db.isEmpty()) {
+//            Intent initialContactsIntent = new Intent(MainActivity.this, InitialContactsActivity.class);
+//            startActivity(initialContactsIntent);
+//        }
 
         dateView = (TextClock) findViewById(R.id.dateClock);
         String skeleton = "MMMddyyyy";

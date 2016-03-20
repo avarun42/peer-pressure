@@ -5,21 +5,28 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.SensorListener;
+import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-public class AlarmActivity extends Activity {
+public class AlarmActivity extends Activity implements SensorListener {
     AlarmManager alarmManager;
     AudioManager audioManager;
     private PendingIntent pendingIntent;
     private static final String LOG_TAG = "callIntent";
+    SensorManager sensorMgr;
+    private static final int SHAKE_THRESHOLD = 1600;
+    private long lastUpdate;
+    private float x,y,z,last_x,last_y,last_z;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,11 @@ public class AlarmActivity extends Activity {
         setTitle("Alarm Actions");
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        sensorMgr = (SensorManager)getSystemService(SENSOR_SERVICE);
+        sensorMgr.registerListener(this,
+                SensorManager.SENSOR_ACCELEROMETER,
+                SensorManager.SENSOR_DELAY_GAME);
+        lastUpdate = System.currentTimeMillis();
         //audioManager.setMode(AudioManager.MODE_NORMAL);
 
         //audioManager.setMicrophoneMute(true);
@@ -97,4 +109,36 @@ public class AlarmActivity extends Activity {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
+    @Override
+    public void onSensorChanged(int sensor, float[] values) {
+        if (sensor == SensorManager.SENSOR_ACCELEROMETER) {
+            long curTime = System.currentTimeMillis();
+            // only allow one update every 100ms.
+            if ((curTime - lastUpdate) > 100) {
+                long diffTime = (curTime - lastUpdate);
+                lastUpdate = curTime;
+
+                x = values[SensorManager.DATA_X];
+                y = values[SensorManager.DATA_Y];
+                z = values[SensorManager.DATA_Z];
+
+                float speed = Math.abs(x+y+z - last_x - last_y - last_z) / diffTime * 10000;
+
+                if (speed > SHAKE_THRESHOLD) {
+                    Log.d("sensor", "shake detected w/ speed: " + speed);
+                    Toast.makeText(this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                }
+                last_x = x;
+                last_y = y;
+                last_z = z;
+            }
+        }
+
+    }
+
+    @Override
+    public void onAccuracyChanged(int sensor, int accuracy) {
+
+    }
 }
