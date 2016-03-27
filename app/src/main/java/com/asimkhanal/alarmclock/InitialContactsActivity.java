@@ -24,8 +24,19 @@ public class InitialContactsActivity extends Activity {
         Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
 
         while (cursor.moveToNext()) {
-            String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-            String phoneNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            String name = "";
+            String phoneNumber = "";
+
+            int nameIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+            if (nameIndex != -1) {
+                name = cursor.getString(nameIndex);
+            }
+
+            int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+            if (phoneIndex != -1) {
+                phoneNumber = cursor.getString(phoneIndex);
+            }
+
             String tier;
 
             int tierNum = new Random().nextInt(3);
