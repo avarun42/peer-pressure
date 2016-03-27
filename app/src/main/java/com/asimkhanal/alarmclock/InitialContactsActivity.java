@@ -24,17 +24,21 @@ public class InitialContactsActivity extends Activity {
         Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
 
         while (cursor.moveToNext()) {
-            String name = "";
-            String phoneNumber = "";
+            String name;
+            String phoneNumber;
 
             int nameIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
             if (nameIndex != -1) {
                 name = cursor.getString(nameIndex);
+            } else {
+                continue;
             }
 
             int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
             if (phoneIndex != -1) {
                 phoneNumber = cursor.getString(phoneIndex);
+            } else {
+                continue;
             }
 
             String tier;
