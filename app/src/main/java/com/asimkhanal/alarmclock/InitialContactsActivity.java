@@ -34,6 +34,7 @@ public class InitialContactsActivity extends Activity {
             int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
             if (phoneIndex != -1) {
                 phoneNumber = cursor.getString(phoneIndex);
+                Log.d("Phonetag",phoneNumber);
             }
 
             String tier;
