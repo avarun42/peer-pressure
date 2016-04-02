@@ -89,6 +89,9 @@ public class AddContactActivity extends Activity implements View.OnFocusChangeLi
      */
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
+        if (!hasFocus){
+            return;
+        }
         switch (v.getId()) {
             case R.id.edit_name:
                 Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);

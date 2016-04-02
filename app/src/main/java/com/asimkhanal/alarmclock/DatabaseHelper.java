@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Info
     private static final String DATABASE_NAME = "contactsManager";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     // Table Names
     private static final String TABLE_CONTACTS = "contacts";
@@ -178,7 +178,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 TABLE_CONTACTS, KEY_CONTACT_TIER);
 
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(CONTACTS_SELECT_QUERY, null);
+        Cursor cursor = db.rawQuery(CONTACTS_SELECT_QUERY, new String[]{tier});
         try {
             if (cursor.moveToFirst()) {
                 do {
