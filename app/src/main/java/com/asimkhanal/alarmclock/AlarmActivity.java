@@ -73,17 +73,17 @@ public class AlarmActivity extends Activity implements SensorListener {
     public void snoozeButtonClicked(View V) {
         String tier = "LOW";
 
-        //DatabaseHelper db = DatabaseHelper.getInstance(this);
-        //List<Contact> contacts = db.getContactsByTier(tier);
-        //Contact contactToCall = contacts.get(new Random().nextInt(contacts.size()));
+        DatabaseHelper db = DatabaseHelper.getInstance(this);
+        List<Contact> contacts = db.getContactsByTier(tier);
+        Contact contactToCall = contacts.get((new Random()).nextInt(contacts.size()));
 
 
         // May need to run following block in service
 //        EndCallListener callListener = new EndCallListener();
 //        TelephonyManager mTM = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 //        mTM.listen(callListener, PhoneStateListener.LISTEN_CALL_STATE);
-
-        String contactNumber = "tel:6097907855";
+        Log.d("atag",contactToCall.phone_number);
+        String contactNumber = "tel:" + contactToCall.phone_number;
 
         Log.d("MyActivity", "Alarm On");
         Calendar calendar = Calendar.getInstance();
