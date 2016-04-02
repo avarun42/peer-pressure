@@ -20,14 +20,13 @@ import java.util.Random;
 
 public class AlarmActivity extends Activity implements SensorListener {
     private static final int SHAKE_DURATION =100000 ;
-    AlarmManager alarmManager;
-    AudioManager audioManager;
-    private PendingIntent pendingIntent;
+    private AlarmManager alarmManager;
+    private AudioManager audioManager;
     private static final String LOG_TAG = "callIntent";
-    SensorManager sensorMgr;
+    SensorManager sensorManager;
     private static final int SHAKE_THRESHOLD = 3200;
     private long lastUpdate;
-    private float x,y,z,last_x,last_y,last_z;
+    private float last_x, last_y, last_z;
     private long mLastShake;
 
     @Override
@@ -37,8 +36,8 @@ public class AlarmActivity extends Activity implements SensorListener {
         setTitle("Alarm Actions");
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        sensorMgr = (SensorManager)getSystemService(SENSOR_SERVICE);
-        sensorMgr.registerListener(this,
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorManager.registerListener(this,
                 SensorManager.SENSOR_ACCELEROMETER,
                 SensorManager.SENSOR_DELAY_GAME);
         lastUpdate = System.currentTimeMillis();
@@ -47,9 +46,11 @@ public class AlarmActivity extends Activity implements SensorListener {
         //audioManager.setMicrophoneMute(true);
     }
 
-    public void stopButtonClicked(View V){
-        android.os.Process.killProcess(android.os.Process.myPid());
-    }
+// --Commented out by Inspection START (4/2/16, 12:05 AM):
+//    public void stopButtonClicked(View V){
+//        android.os.Process.killProcess(android.os.Process.myPid());
+//    }
+// --Commented out by Inspection STOP (4/2/16, 12:05 AM)
 
 //    private class EndCallListener extends PhoneStateListener {
 //        @Override
@@ -89,7 +90,7 @@ public class AlarmActivity extends Activity implements SensorListener {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, 1);
         Intent myIntent = new Intent(AlarmActivity.this, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, 0, myIntent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, 0, myIntent, 0);
         alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
         Log.d("AddActivity", "alarm");
 
@@ -120,11 +121,11 @@ public class AlarmActivity extends Activity implements SensorListener {
                 long diffTime = (curTime - lastUpdate);
                 lastUpdate = curTime;
 
-                x = values[SensorManager.DATA_X];
-                y = values[SensorManager.DATA_Y];
-                z = values[SensorManager.DATA_Z];
+                float x = values[SensorManager.DATA_X];
+                float y = values[SensorManager.DATA_Y];
+                float z = values[SensorManager.DATA_Z];
 
-                float speed = Math.abs(x+y+z - last_x - last_y - last_z) / diffTime * 10000;
+                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
 
                 if (speed > SHAKE_THRESHOLD ) {
                     if(curTime-mLastShake>SHAKE_DURATION) {
