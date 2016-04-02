@@ -23,17 +23,35 @@ public class InitialContactsActivity extends Activity {
         Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
 
         while (cursor.moveToNext()) {
+            String id = "";
             String name = "";
             String phoneNumber = "";
 
-            int nameIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+            int idIndex = cursor.getColumnIndex(ContactsContract.Contacts._ID);
+            if (idIndex != -1) {
+                id = cursor.getString(idIndex);
+            }
+
+            int nameIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
             if (nameIndex != -1) {
                 name = cursor.getString(nameIndex);
             }
 
-            int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-            if (phoneIndex != -1) {
-                phoneNumber = cursor.getString(phoneIndex);
+            int hasPhoneNumberIndex = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER);
+
+            if (Integer.parseInt(cursor.getString(hasPhoneNumberIndex)) > 0) {
+                Cursor phoneCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                        new String[]{id}, null);
+
+                while (phoneCur.moveToNext()) {
+                    int phoneIndex = phoneCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                    if (phoneIndex != -1) {
+                        phoneNumber = phoneCur.getString(phoneIndex);
+                    }
+                }
+
+                phoneCur.close();
             }
 
             String tier;
