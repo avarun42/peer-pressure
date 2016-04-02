@@ -12,7 +12,7 @@ import android.widget.Spinner;
 
 import java.util.List;
 
-public class AddContactActivity extends Activity {
+public class AddContactActivity extends Activity implements View.OnFocusChangeListener {
     EditText nameText,phoneNo;
     Spinner tierText;
     String tier;
@@ -23,9 +23,9 @@ public class AddContactActivity extends Activity {
         setContentView(R.layout.activity_add_contact);
         setTitle("Add Contact");
 
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-        startActivityForResult(intent, 1);
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+//        startActivityForResult(intent, 1);
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner_tier);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -43,6 +43,7 @@ public class AddContactActivity extends Activity {
 
 
     }
+
 
     public void addContactClicked(View V){
 
@@ -77,6 +78,21 @@ public class AddContactActivity extends Activity {
         for (Contact cn : contacts) {
             String log = "Name: " + cn.name + ", Phone #: " + cn.phone_number + ", Tier: " + cn.tier;
             Log.d("Name: ", log);
+        }
+    }
+
+    /**
+     * Called when the focus state of a view has changed.
+     *
+     * @param v        The view whose state has changed.
+     * @param hasFocus The new focus state of v.
+     */
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()) {
+            case R.id.edit_name:
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, 1);
         }
     }
 }

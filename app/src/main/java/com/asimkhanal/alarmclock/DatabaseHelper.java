@@ -10,9 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Varun Arora on 3/19/2016.
- */
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DB";
 
