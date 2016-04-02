@@ -23,19 +23,16 @@ public class InitialContactsActivity extends Activity {
         Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
 
         while (cursor.moveToNext()) {
-            String id = "";
-            String name = "";
+            String id;
+            String name;
             String phoneNumber = "";
+            String tier;
 
             int idIndex = cursor.getColumnIndex(ContactsContract.Contacts._ID);
-            if (idIndex != -1) {
-                id = cursor.getString(idIndex);
-            }
+            id = cursor.getString(idIndex);
 
             int nameIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-            if (nameIndex != -1) {
-                name = cursor.getString(nameIndex);
-            }
+            name = cursor.getString(nameIndex);
 
             int hasPhoneNumberIndex = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER);
 
@@ -45,8 +42,10 @@ public class InitialContactsActivity extends Activity {
                         new String[]{id}, null);
 
                 while (phoneCur.moveToNext()) {
+                    int type = phoneCur.getInt(phoneCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+
                     int phoneIndex = phoneCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                    if (phoneIndex != -1) {
+                    if (type == ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE) {
                         phoneNumber = phoneCur.getString(phoneIndex);
                     }
                 }
@@ -54,10 +53,7 @@ public class InitialContactsActivity extends Activity {
                 phoneCur.close();
             }
 
-            String tier;
-
             int tierNum = new Random().nextInt(3);
-
             switch (tierNum) {
                 case 0:
                     tier = "low";
@@ -76,9 +72,14 @@ public class InitialContactsActivity extends Activity {
             contact.phone_number = phoneNumber;
             contact.tier = tier.toUpperCase();
 
-            db.addOrUpdateContact(contact);
+            if (contact.name.equals("") || contact.phone_number.equals("")) {
+                Log.d("contactNotAdded", contact.toString());
+                continue;
+            }
 
             Log.d("contact", contact.toString());
+
+            db.addOrUpdateContact(contact);
         }
         cursor.close();
 
