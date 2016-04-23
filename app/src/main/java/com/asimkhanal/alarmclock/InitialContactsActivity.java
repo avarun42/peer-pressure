@@ -76,10 +76,10 @@ public class InitialContactsActivity extends Activity {
                 Log.d("contactNotAdded", contact.toString());
                 continue;
             }
+
             db.addOrUpdateContact(contact);
+
             Log.d("contact", contact.toString());
-
-
         }
         cursor.close();
 

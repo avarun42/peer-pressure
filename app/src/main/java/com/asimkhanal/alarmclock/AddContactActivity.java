@@ -12,8 +12,8 @@ import android.widget.Spinner;
 
 import java.util.List;
 
-public class AddContactActivity extends Activity implements View.OnFocusChangeListener {
-    EditText nameText,phoneNo;
+public class AddContactActivity extends Activity {
+    EditText nameText, phoneNo;
     Spinner tierText;
     String tier;
 
@@ -23,25 +23,28 @@ public class AddContactActivity extends Activity implements View.OnFocusChangeLi
         setContentView(R.layout.activity_add_contact);
         setTitle("Add Contact");
 
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-//        startActivityForResult(intent, 1);
+        nameText = (EditText) findViewById(R.id.edit_name);
+        phoneNo = (EditText) findViewById(R.id.edit_phone);
+        tierText = (Spinner) findViewById(R.id.spinner_tier);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner_tier);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.tier_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        tierText.setAdapter(adapter);
 
-        nameText = (EditText)findViewById(R.id.edit_name);
-        phoneNo = (EditText)findViewById(R.id.edit_phone);
-        tierText = (Spinner)findViewById(R.id.spinner_tier);
-
-
-
+        nameText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+                    startActivityForResult(intent, 1);
+                }
+            }
+        });
     }
 
 
@@ -78,24 +81,6 @@ public class AddContactActivity extends Activity implements View.OnFocusChangeLi
         for (Contact cn : contacts) {
             String log = "Name: " + cn.name + ", Phone #: " + cn.phone_number + ", Tier: " + cn.tier;
             Log.d("Name: ", log);
-        }
-    }
-
-    /**
-     * Called when the focus state of a view has changed.
-     *
-     * @param v        The view whose state has changed.
-     * @param hasFocus The new focus state of v.
-     */
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        if (!hasFocus){
-            return;
-        }
-        switch (v.getId()) {
-            case R.id.edit_name:
-                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-                startActivityForResult(intent, 1);
         }
     }
 }

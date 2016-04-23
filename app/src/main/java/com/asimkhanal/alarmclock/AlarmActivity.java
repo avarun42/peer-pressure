@@ -23,7 +23,7 @@ public class AlarmActivity extends Activity implements SensorListener {
     private AlarmManager alarmManager;
     private AudioManager audioManager;
     private static final String LOG_TAG = "callIntent";
-    SensorManager sensorManager;
+    private SensorManager sensorManager;
     private static final int SHAKE_THRESHOLD = 3200;
     private long lastUpdate;
     private float last_x, last_y, last_z;
@@ -92,7 +92,7 @@ public class AlarmActivity extends Activity implements SensorListener {
         Intent myIntent = new Intent(AlarmActivity.this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, 0, myIntent, 0);
         alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
-        Log.d("AddActivity", "alarm");
+        Log.d("AddAlarmActivity", "alarm");
 
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse(contactNumber));

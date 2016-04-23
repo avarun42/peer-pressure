@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
 
     public void addButtonClick(View V) {
         //open the new activity
-        Intent intent = new Intent(MainActivity.this, AddActivity.class);
+        Intent intent = new Intent(MainActivity.this, AddAlarmActivity.class);
         startActivity(intent);
     }
 
