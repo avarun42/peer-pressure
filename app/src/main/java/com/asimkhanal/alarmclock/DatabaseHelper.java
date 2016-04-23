@@ -88,7 +88,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Unfortunately, there is a bug with the insertOnConflict method
     // (https://code.google.com/p/android/issues/detail?id=13045) so we need to fall back to the more
     // verbose option of querying for the contact's primary key if we did an update.
-    public long addOrUpdateContact(Contact contact) {
+    public int addOrUpdateContact(Contact contact) {
         // The database connection is cached so it's not expensive to call getWriteableDatabase() multiple times.
         SQLiteDatabase db = getWritableDatabase();
         long contactID = -1;
@@ -131,7 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.endTransaction();
         }
 
-        return contactID;
+        return (int) contactID;
     }
 
     // Get all contacts in the database

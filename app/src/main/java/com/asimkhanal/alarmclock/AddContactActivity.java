@@ -10,8 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.util.List;
-
 public class AddContactActivity extends Activity {
     EditText nameText, phoneNo;
     Spinner tierText;
@@ -50,37 +48,35 @@ public class AddContactActivity extends Activity {
 
     public void addContactClicked(View V){
 
-        if (tierText.getSelectedItem().toString().equals("Low Key")){
-            tier = "Low";
-        } else if(tierText.getSelectedItem().toString().equals("Slightly Awkward")){
-            tier = "Medium";
-        } else if(tierText.getSelectedItem().toString().equals("You don\'t wanna call this person")){
-            tier = "high";
+        // Can we use tierText.getSelectedItemId() or tierText.getSelectedItemPosition() instead?
+        switch (tierText.getSelectedItem().toString()) {
+            case "Low Key":
+                tier = "low";
+                break;
+            case "Slightly Awkward":
+                tier = "medium";
+                break;
+            case "You don't wanna call this person":
+                tier = "high";
+                break;
         }
 
-        // Create sample data
+        // Create contact data
         Contact c1 = new Contact();
         c1.name = nameText.getText().toString();
-        c1.phone_number = "tel:" + phoneNo.getText().toString();
+        c1.phone_number = phoneNo.getText().toString();
         c1.tier = tier.toUpperCase();
-
 
         // Get singleton instance of database
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
 
-        // Add sample contacts to the database
+        // Add contact to the database
         Log.d("Insert: ", "Inserting ..");
-        databaseHelper.addOrUpdateContact(c1);
-//        databaseHelper.addOrUpdateContact(c2);
-//        databaseHelper.addOrUpdateContact(c3);
-//        databaseHelper.addOrUpdateContact(c4);
+        int contactId = databaseHelper.addOrUpdateContact(c1);
 
-        // Get all contacts from database
-        Log.d("Reading: ", "Reading all contacts..");
-        List<Contact> contacts = databaseHelper.getAllContacts();
-        for (Contact cn : contacts) {
-            String log = "Name: " + cn.name + ", Phone #: " + cn.phone_number + ", Tier: " + cn.tier;
-            Log.d("Name: ", log);
-        }
+        // Get contact from database
+        Log.d("Reading: ", "Reading inserted contact..");
+        Contact cn = databaseHelper.getContact(contactId);
+        Log.d("Name: ", cn.toString());
     }
 }
