@@ -13,7 +13,7 @@ import android.widget.Spinner;
 import java.util.List;
 
 public class AddContactActivity extends Activity {
-    EditText nameText,phoneNo;
+    EditText nameText, phoneNo;
     Spinner tierText;
     String tier;
 
@@ -23,26 +23,30 @@ public class AddContactActivity extends Activity {
         setContentView(R.layout.activity_add_contact);
         setTitle("Add Contact");
 
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-        startActivityForResult(intent, 1);
+        nameText = (EditText) findViewById(R.id.edit_name);
+        phoneNo = (EditText) findViewById(R.id.edit_phone);
+        tierText = (Spinner) findViewById(R.id.spinner_tier);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner_tier);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.tier_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        tierText.setAdapter(adapter);
 
-        nameText = (EditText)findViewById(R.id.edit_name);
-        phoneNo = (EditText)findViewById(R.id.edit_phone);
-        tierText = (Spinner)findViewById(R.id.spinner_tier);
-
-
-
+        nameText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+                    startActivityForResult(intent, 1);
+                }
+            }
+        });
     }
+
 
     public void addContactClicked(View V){
 
@@ -58,7 +62,7 @@ public class AddContactActivity extends Activity {
         Contact c1 = new Contact();
         c1.name = nameText.getText().toString();
         c1.phone_number = "tel:" + phoneNo.getText().toString();
-        c1.tier = tier;
+        c1.tier = tier.toUpperCase();
 
 
         // Get singleton instance of database

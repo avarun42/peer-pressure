@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,16 +14,16 @@ import android.widget.ToggleButton;
 
 import java.util.Calendar;
 
-public class AddActivity extends Activity {
+public class AddAlarmActivity extends Activity {
     AlarmManager alarmManager;
     private PendingIntent pendingIntent;
     private TextView alarmTextView;
     private TimePicker alarmTimePicker;
     private DatePicker alarmDatePicker;
-    private static AddActivity inst;
+    private static AddAlarmActivity inst;
     private String alarmText;
 
-    public static AddActivity instance() {
+    public static AddAlarmActivity instance() {
         return inst;
     }
 
@@ -37,7 +36,7 @@ public class AddActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_add_alarm);
         setTitle("Add an alarm");
         alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
         alarmDatePicker = (DatePicker)findViewById(R.id.datePicker);
@@ -55,10 +54,10 @@ public class AddActivity extends Activity {
             /*calendar.set(Calendar.YEAR,alarmDatePicker.getYear());
             calendar.set(Calendar.MONTH,alarmDatePicker.getMonth());
             calendar.set(Calendar.MONTH,alarmDatePicker.getDayOfMonth());*/
-            Intent myIntent = new Intent(AddActivity.this, AlarmReceiver.class);
-            pendingIntent = PendingIntent.getBroadcast(AddActivity.this, 0, myIntent, 0);
+            Intent myIntent = new Intent(AddAlarmActivity.this, AlarmReceiver.class);
+            pendingIntent = PendingIntent.getBroadcast(AddAlarmActivity.this, 0, myIntent, 0);
             alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
-            Log.d("AddActivity","alarm");
+            Log.d("AddAlarmActivity", "alarm");
         } else {
             alarmManager.cancel(pendingIntent);
             setAlarmText("");

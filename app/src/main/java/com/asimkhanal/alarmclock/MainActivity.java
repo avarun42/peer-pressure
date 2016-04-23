@@ -22,11 +22,14 @@ public class MainActivity extends Activity {
         setTitle("Text Alarm");
 
         DatabaseHelper db = DatabaseHelper.getInstance(this);
-        // If db is empty, must be populated
-//        if (db.isEmpty()) {
-//            Intent initialContactsIntent = new Intent(MainActivity.this, InitialContactsActivity.class);
-//            startActivity(initialContactsIntent);
-//        }
+
+        /*
+            If db is empty, must be populated
+         */
+        if (db.isEmpty()) {
+            Intent initialContactsIntent = new Intent(MainActivity.this, InitialContactsActivity.class);
+            startActivity(initialContactsIntent);
+        }
 
         dateView = (TextClock) findViewById(R.id.dateClock);
         String skeleton = "MMMddyyyy";
@@ -42,7 +45,7 @@ public class MainActivity extends Activity {
 
     public void addButtonClick(View V) {
         //open the new activity
-        Intent intent = new Intent(MainActivity.this, AddActivity.class);
+        Intent intent = new Intent(MainActivity.this, AddAlarmActivity.class);
         startActivity(intent);
     }
 
