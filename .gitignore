@@ -26,12 +26,7 @@ proguard/
 .idea/libraries/
 .idea/dictionaries/
 .idea/workspace.xml
-.idea/copyright/profiles_settings.xml
-.idea/.name
-.idea/compiler.xml
-.idea/encodings.xml
-.idea/misc.xml
-.idea/modules.xml
+.idea/tasks.xml
 
 # Intellij
 *.iml
