@@ -41,15 +41,19 @@ public class AddContactActivity extends Activity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-//                    Intent pickContactIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//                    pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-
-                    Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
-                    pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE); // Show user only contacts w/ phone numbers
-                    startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
+                    pickContact();
                 }
             }
         });
+    }
+
+    private void pickContact() {
+//        Intent pickContactIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//        pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+
+        Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
+        pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE); // Show user only contacts w/ phone numbers
+        startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
     }
 
     @Override
@@ -110,7 +114,7 @@ public class AddContactActivity extends Activity {
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
 
         // Add contact to the database
-        Log.d("Insert: ", "Inserting ..");
+        Log.d("Insert: ", "Inserting..");
         int contactId = databaseHelper.addOrUpdateContact(c1);
 
         // Get contact from database
