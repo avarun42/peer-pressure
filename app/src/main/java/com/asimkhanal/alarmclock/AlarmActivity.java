@@ -74,18 +74,6 @@ public class AlarmActivity extends Activity implements SensorListener {
     public void snoozeButtonClicked(View V) {
         String tier = "LOW";
 
-        DatabaseHelper db = DatabaseHelper.getInstance(this);
-        List<Contact> contacts = db.getContactsByTier(tier);
-        Contact contactToCall = contacts.get((new Random()).nextInt(contacts.size()));
-
-
-        // May need to run following block in service
-//        EndCallListener callListener = new EndCallListener();
-//        TelephonyManager mTM = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-//        mTM.listen(callListener, PhoneStateListener.LISTEN_CALL_STATE);
-        Log.d("atag",contactToCall.phone_number);
-        String contactNumber = "tel:" + contactToCall.phone_number;
-
         Log.d("MyActivity", "Alarm On");
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, 1);
@@ -94,19 +82,31 @@ public class AlarmActivity extends Activity implements SensorListener {
         alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
         Log.d("AddAlarmActivity", "alarm");
 
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse(contactNumber));
         try {
+            DatabaseHelper db = DatabaseHelper.getInstance(this);
+            List<Contact> contacts = db.getContactsByTier(tier);
+            Contact contactToCall = contacts.get((new Random()).nextInt(contacts.size()));
 
-            //audioManager.setSpeakerphoneOn(true);
-            startActivity(callIntent);
-            audioManager.setMode(AudioManager.MODE_IN_CALL);
-            audioManager.setSpeakerphoneOn(true);
+            // May need to run following block in service
+//            EndCallListener callListener = new EndCallListener();
+//            TelephonyManager mTM = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+//            mTM.listen(callListener, PhoneStateListener.LISTEN_CALL_STATE);
+            Log.d("atag",contactToCall.phone_number);
+            String contactNumber = "tel:" + contactToCall.phone_number;
 
-
-        } catch (SecurityException e) {
-            Log.d("callIntent", "CALL_PHONE permission not granted");
-            Log.d("callIntent", e.getMessage());
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse(contactNumber));
+            try {
+                //audioManager.setSpeakerphoneOn(true);
+                startActivity(callIntent);
+                audioManager.setMode(AudioManager.MODE_IN_CALL);
+                audioManager.setSpeakerphoneOn(true);
+            } catch (SecurityException e) {
+                Log.d("callIntent", "CALL_PHONE permission not granted");
+                Log.d("callIntent", e.getMessage());
+            }
+        } catch (IllegalArgumentException e) {
+            Log.w("snoozeButton", "No contacts found, call cannot be made");
         }
 
         android.os.Process.killProcess(android.os.Process.myPid());

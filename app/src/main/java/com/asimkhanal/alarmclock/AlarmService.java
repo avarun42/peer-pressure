@@ -1,8 +1,5 @@
 package com.asimkhanal.alarmclock;
 
-/**
- * Created by Asim KHANAL on 3/19/2016.
- */
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
