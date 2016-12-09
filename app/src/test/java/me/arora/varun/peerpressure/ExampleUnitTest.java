@@ -1,4 +1,4 @@
-package com.asimkhanal.alarmclock;
+package me.arora.varun.peerpressure;
 
 import org.junit.Test;
 

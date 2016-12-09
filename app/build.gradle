@@ -6,7 +6,7 @@ android {
     buildToolsVersion '23.0.3'
 
     defaultConfig {
-        applicationId "com.asimkhanal.alarmclock"
+        applicationId "me.arora.varun.peerpressure"
         minSdkVersion 21
         targetSdkVersion 21
         versionCode 1

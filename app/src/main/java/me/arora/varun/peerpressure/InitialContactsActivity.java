@@ -1,4 +1,4 @@
-package com.asimkhanal.alarmclock;
+package me.arora.varun.peerpressure;
 
 import android.app.Activity;
 import android.content.ContentResolver;
