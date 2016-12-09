@@ -30,19 +30,27 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Contacts"
-        android:id="@+id/button_contact"
-        android:layout_above="@+id/button_add"
+        android:text="Add Alarm"
+        android:id="@+id/button_add"
+        android:layout_above="@+id/button_facebook"
         android:layout_centerHorizontal="true"
-        android:onClick="contactButtonClicked"/>
+        android:onClick="addButtonClicked" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Alarm"
-        android:id="@+id/button_add"
+        android:text="Import Facebook Contacts"
+        android:id="@+id/button_facebook"
+        android:layout_above="@+id/button_contact"
+        android:layout_centerHorizontal="true"
+        android:onClick="facebookButtonClicked" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add New Contact"
+        android:id="@+id/button_contact"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="addButtonClick"
-        android:enabled="true" />
+        android:onClick="contactButtonClicked" />
 </RelativeLayout>

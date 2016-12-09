@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.TextClock
 
 import java.util.Locale
@@ -12,15 +11,12 @@ import java.util.Locale
 import android.text.format.DateFormat.getBestDateTimePattern
 
 class MainActivity : Activity() {
-    internal var timeView: TextClock = findViewById(R.id.clock) as TextClock
-    internal var dateView: TextClock = findViewById(R.id.dateClock) as TextClock
-    internal var addButton: Button? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         title = "Text Alarm"
 
+        val dateView = findViewById(R.id.dateClock) as TextClock
         val db = DatabaseHelper.getInstance(this)
 
         /*
@@ -41,7 +37,7 @@ class MainActivity : Activity() {
         stopService(intent)
     }
 
-    fun addButtonClick(V: View) {
+    fun addButtonClicked(V: View) {
         //open the new activity
         val intent = Intent(this@MainActivity, AddAlarmActivity::class.java)
         startActivity(intent)
@@ -49,6 +45,11 @@ class MainActivity : Activity() {
 
     fun contactButtonClicked(V: View) {
         val intent = Intent(this@MainActivity, AddContactActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun facebookButtonClicked(V: View) {
+        val intent = Intent(this@MainActivity, ImportFacebookContactsActivity::class.java)
         startActivity(intent)
     }
 }

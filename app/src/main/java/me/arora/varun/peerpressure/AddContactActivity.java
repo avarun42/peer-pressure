@@ -90,7 +90,6 @@ public class AddContactActivity extends Activity {
     }
 
     public void addContactClicked(View V){
-
         // Can we use tierText.getSelectedItemId() or tierText.getSelectedItemPosition() instead?
         switch (tierText.getSelectedItem().toString()) {
             case "Low Key":
@@ -121,5 +120,7 @@ public class AddContactActivity extends Activity {
         Log.d("Reading: ", "Reading inserted contact..");
         Contact cn = databaseHelper.getContact(contactId);
         Log.d("Name: ", cn.toString());
+
+        finish();
     }
 }
